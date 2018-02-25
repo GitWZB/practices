@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script src="js/jquery.mousewheel.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.box {
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.inner {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+			}
+			
+			.inner img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.btnbox {
+				position: absolute;
+				right: 10px;
+				top: 42%;
+			}
+			
+			.btnbox .btn {
+				width: 18px;
+				height: 18px;
+				border-radius: 50%;
+				background: rgba(0,0,0,.3);
+				margin: 8px;
+			}
+			
+			.btnbox .active {
+				border-radius: 18px;
+				background: yellowgreen;
+				height: 35px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box">
+			<div class="inner"><img src="img/1.jpg" alt="" /></div>
+			<div class="inner"><img src="img/2.jpg" alt="" /></div>
+			<div class="inner"><img src="img/3.jpg" alt="" /></div>
+			<div class="inner"><img src="img/4.jpg" alt="" /></div>
+			<div class="inner"><img src="img/5.jpg" alt="" /></div>
+			<div class="btnbox">
+				<div class="btn active"></div>
+				<div class="btn"></div>
+				<div class="btn"></div>
+				<div class="btn"></div>
+				<div class="btn"></div>
+			</div>
+		</div>
+	</body>
+	<script>
+
+	
+	
+		$(function() {
+			var w = $(window).width();
+			var h = $(window).height();
+			$(".box").width(w).height(h);
+			$(".inner").not(":eq(0)").css("top", h + "px");
+			var now = 0;
+			var next = 0;
+			
+			var t = setInterval(function(){
+				if(!$(".inner").is(":animated")) {
+					next++;
+					if(next > $(".inner").length - 1) {
+						next = 0;
+					}
+					console.log(next)
+					$(".btn").removeClass('active').eq(next).addClass("active")
+					$(".inner").eq(next).css("top", h + "px");
+					$(".inner").eq(now).animate({
+						top: -h + "px"
+					}, 1000);
+					$(".inner").eq(next).animate({
+						top: 0 + "px"
+					}, 1000);
+					now = next;
+				}
+			},1500)
+			$(window).mousewheel(function() {
+				if(!$(".inner").is(":animated")) {
+					next--;
+					if(next < 0) {
+						next = $(".inner").length - 1;
+					}
+					
+					$(".btn").removeClass('active').eq(next).addClass("active")
+					$(".inner").eq(next).css("top", -h + "px");
+					$(".inner").eq(now).animate({
+						top: h + "px"
+					},1000);
+					$(".inner").eq(next).animate({
+						top: "0px"
+					},1000);
+					now = next;
+				}
+			}, function() {
+				if(!$(".inner").is(":animated")) {
+					next++;
+					if(next > $(".inner").length - 1) {
+						next = 0;
+					}
+					console.log(next)
+					$(".btn").removeClass('active').eq(next).addClass("active")
+					$(".inner").eq(next).css("top", h + "px");
+					$(".inner").eq(now).animate({
+						top: -h + "px"
+					}, 1000);
+					$(".inner").eq(next).animate({
+						top: 0 + "px"
+					}, 1000);
+					now = next;
+				}
+			})
+		})
+	</script>
+
+</html>
