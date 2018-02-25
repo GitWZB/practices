@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width:100px;
+				height: 100px;
+				background: yellow;
+				float: left;
+				margin-left: 10px;
+				text-align: center;
+				line-height: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+	</body>
+	<script>
+		var oDivs=document.querySelectorAll('div');
+		var m=-1;
+		setInterval(function(){
+			
+		for(i=0;i<oDivs.length;i++){oDivs[i].style.background="yellow"}
+//			for()
+			m++;
+			if(m==4){m=0}
+			oDivs[m].style.background="red";
+			
+		},1000)
+	</script>
+</html>
