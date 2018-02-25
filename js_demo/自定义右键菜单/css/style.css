@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/* 初始化CSS */
+html,body,ul,li,ol,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,form,fieldset,legend,img{margin:0;padding:0;}
+fieldset,img{border:0;}
+img{display: block;}
+address,caption,cite,code,dfn,th,var{font-style:normal;font-weight:normal;}
+ul,ol{list-style:none;}
+body{color:#333;padding:5px 0;font:12px/20px "SimSun","宋体","Arial Narrow",HELVETICA;background:#fff;/* overflow-y:scroll;*/ overflow
+
+-x:hidden;}
+a{color:#666;text-decoration:none;}
+a:visited{color:#666;}
+a:hover,a:active,a:focus{color:#ff8400;text-decoration:underline;}
+
+
+body{background:#CCC;font-size:24px;}
+
+#menu{
+	width:150px;
+	height:240px;
+	display:none;
+	position:absolute;
+}
+
+#menu li{
+	width:150px;
+	height:80px;
+	background: #F3F3F1;
+	text-align: center;
+	line-height:80px;
+}
+
+#menu li a{
+	color:#494B41;
+	text-decoration: none;
+}
+
+#menu li:hover{
+	background: #505245;
+	
+}
+
+#menu li:hover a{
+	color:#fff;
+}

@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无缝滚动</title>
+<style type="text/css">
+#wrap{
+	margin:0 auto;
+	width:800px;
+	height:600px;
+	overflow:hidden;
+	}
+#box{
+	position:relative;
+	}
+#mybox1,#mybox2{
+	height:200px;
+	width:800px;
+	margin-top:200px;
+	background:red;
+	position:absolute;
+	}
+#mybox2{
+	left:800px;
+	}
+#box img{
+	list-style:none;
+	height:200px;
+	width:200px;
+	float:left;
+	}
+</style>
+</head>
+
+<body>
+<div id="wrap">
+    <div id="box">
+        <div id="mybox1">
+            <img src="images/bg1.jpg">
+            <img src="images/bg2.jpg">
+            <img src="images/bg3.jpg">
+            <img src="images/bg4.jpg">
+        </div>
+        <div id="mybox2">
+            <img src="images/bg1.jpg">
+            <img src="images/bg2.jpg">
+            <img src="images/bg3.jpg">
+            <img src="images/bg4.jpg">
+        </div>
+    </div>
+</div>
+</body>
+<script>
+//var oBox1=document.getElementById("mybox1");
+//var oBox2=document.getElementById("mybox2");
+window.onload=function (){
+var oBox1=document.getElementById("mybox1");
+var oBox2=document.getElementById("mybox2");
+var oBox=document.getElementById("box")
+var a=0;
+var run;
+	function move(){
+	    run=setInterval(function()
+		{	
+		oBox1.style.left=a+"px";
+		oBox2.style.left=(a-800)+"px";
+		a++;
+		if(a==800)
+		{
+		a=0;
+		}
+		},1)}
+		move();
+	
+		oBox.onmouseover=function(){clearInterval(run)}
+		oBox.onmouseout=function(){clearInterval(run);move()}
+	    }
+
+</script>
+</html>
