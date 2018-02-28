@@ -1,2 +1,2 @@
 # practices
-small practices in daylife
+small practices in dailylife
