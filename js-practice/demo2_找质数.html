@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>编写一个程序,找出大于200的最小的质数</title>
+	</head>
+
+	<body>
+	</body>
+	<script type="text/javascript">
+		for(var num = 200;;num++) {
+			var isPrimeNumber = true;
+//			isPrimeNumber = true;
+			for(var i = 2; i < num; i++) {
+				if((num % i) === 0) {
+					isPrimeNumber = false;
+					break;
+				}
+			}
+			if(isPrimeNumber) {
+				document.write(i + ';&nbsp;&nbsp;');
+				break;
+			}
+		}
+	</script>
+
+</html>

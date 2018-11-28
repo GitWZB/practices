@@ -1,0 +1,64 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/* 初始化CSS */
+html,body,ul,li,ol,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,form,fieldset,legend,img{margin:0;padding:0;}
+fieldset,img{border:0;}
+img{display: block;}
+address,caption,cite,code,dfn,th,var{font-style:normal;font-weight:normal;}
+ul,ol{list-style:none;}
+body{color:#333;padding:5px 0;font:12px/20px "SimSun","宋体","Arial Narrow",HELVETICA;background:#fff;/* overflow-y:scroll;*/ overflow
+
+-x:hidden;}
+a{color:#666;text-decoration:none;}
+a:visited{color:#666;}
+a:hover,a:active,a:focus{color:#ff8400;text-decoration:underline;}
+
+
+body{background:#CCC;font-size:24px;}
+
+#demo{
+	display: block;
+    width: 300px;
+    height: 300px;
+    margin: 50px;
+    position: relative;
+    border: 1px solid #ccc;
+}
+
+#small-box {
+	
+    position: relative;
+    z-index: 1;
+    /*background: #0033FF;*/
+}
+
+
+#float-box {
+    display: none;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    background: #ffffcc;
+    border: 1px solid #ccc;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
+
+#big-box {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 400px;
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    z-index: 1;
+}
+
+#big-box img {
+    position: absolute;
+    z-index: 5
+}

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/vue/2.5.17/vue.min.js"></script>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+        .carousel_wrap {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel_item {
+            float: left;
+        }
+
+        .indicator_box {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 5px;
+            background: yellow;
+        }
+
+        .indicator_active {
+            background: black;
+            width: 15px;
+            border-radius: 5px;
+            transition: 200ms
+        }
+    </style>
+    <title>vue-轮播</title>
+</head>
+
+<body>
+    <div class="carousel_wrap" @touchstart="touchstart" @touchend="touchend">
+        <div class="slider_box" :style="slider_box_style">
+            <div class="carousel_item" v-for="(item,index) in sliders" :key="index" :style="{background:item.bc,width:width+'px',height:'100%'}">
+                {{item.msg}}
+            </div>
+        </div>
+        <div class="indicator_box">
+            <span class="indicator_wrap">
+                <span class="indicator" v-for="(item,index) in (count-2)" :key="index" :class="active==item?'indicator_active':''"></span>
+            </span>
+        </div>
+    </div>
+</body>
+<script>
+    //适应屏幕大小变化
+    (function (win) {
+        var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+        win.addEventListener(resizeEvt, function () {
+            location.reload()
+        }, false);
+    })(window);
+
+    var app = new Vue({
+        data() {
+            return {
+                startX: "",
+                startY: "",
+                endX: "",
+                endY: "",
+                width: "",
+                offset: 0,
+                active_index: 1,
+                count: 5,
+                step: 0,
+                currentDuration: 0,
+                timer: 0,
+                sliders: [{
+                        bc: "green",
+                        msg: "我是第一张"
+                    },
+                    {
+                        bc: "red",
+                        msg: "我是第二张"
+                    },
+                    {
+                        bc: "blue",
+                        msg: "我是第三张"
+                    }
+                ]
+            };
+        },
+        created() {
+            let items = this.sliders;
+            items.splice(0, 0, items[items.length - 1]);
+            items.splice(items.length, 0, items[1]);
+        },
+        computed: {
+            slider_box_style() {
+                return {
+                    width: this.width * (this.count + 2) + "px",
+                    height: "100%",
+                    transitionDuration: `${this.currentDuration}ms`,
+                    transform: `translate3d(${this.offset}px, 0, 0)`
+                };
+            },
+            active() {
+                let num = this.count - 2;
+                let active = this.active_index;
+                if (active % num == 0 && active > 0) {
+                    return this.count - 2;
+                } else if (active % num > 0) {
+                    return active % num;
+                }
+            }
+        },
+        mounted() {
+            this.width = this.$el.offsetWidth;
+            this.count = this.sliders.length;
+            this.offset = -this.width;
+            this.auto_play();
+        },
+        watch: {
+            offset: function () {
+                this.active_index = -this.offset / this.width;
+                console.log(this.active_index);
+                if (this.active_index > this.count - 1) {
+                    clearTimeout(this.timer);
+                    this.go(1, 0);
+                    setTimeout(() => {
+                        this.move(0, 2000);
+                        this.auto_play();
+                    }, 30);
+                } else if (this.active_index < 1) {
+                    clearTimeout(this.timer);
+                    this.go(4, 0);
+                    setTimeout(() => {
+                        this.move(-1, 2000);
+                        this.auto_play();
+                    }, 30);
+                }
+            }
+        },
+        methods: {
+            auto_play() {
+                clearTimeout(this.timer);
+                this.timer = setTimeout(() => {
+                    this.move(0, 2000);
+                    this.auto_play();
+                }, 2000);
+            },
+            move(step, duration = 0) {
+                this.currentDuration = duration;
+                if (step == -1) {
+                    this.offset += this.width;
+                } else if (step == 1 || step == 0) {
+                    this.offset -= this.width;
+                }
+            },
+            go(step, duration = 0) {
+                let old_offset = this.offset;
+                this.currentDuration = duration;
+                this.offset = -this.width * step;
+            },
+            touchstart(event) {
+                this.startX = event.touches[0].clientX;
+                this.startY = event.touches[0].clientY;
+                clearTimeout(this.timer);
+            },
+            touchend(event) {
+                this.endX = event.changedTouches[0].clientX;
+                this.endY = event.changedTouches[0].clientY;
+                let {
+                    startX,
+                    startY,
+                    endX,
+                    endY
+                } = this;
+                if (endX - startX >= 20) {
+                    this.direction = 1;
+                    this.move(-1, 2000);
+                } else if (endX - startX <= -20) {
+                    this.direction = -1;
+                    this.move(1, 2000);
+                }
+                this.auto_play();
+            }
+        }
+    }).$mount('.carousel_wrap')
+</script>
+
+</html>

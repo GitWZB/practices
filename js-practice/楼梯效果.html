@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		.sec{
+			width: 1250px;
+			height: 600px;
+			line-height: 600px;
+			text-align: center;
+			font-size: 40px;
+			
+		}
+		div:nth-child(1){
+			background: blue;
+		}
+		div:nth-child(2){
+			background: red;
+		}
+		div:nth-child(3){
+			background: gray;
+		}
+		div:nth-child(4){
+			background: yellow;
+		}
+		div:nth-child(5){
+			background: green;
+		}
+		ul{
+			position: fixed;
+			right: 0;
+			top: 100px;
+		}
+		li{
+			list-style: none;
+			width: 80px;
+			height: 80px;
+			line-height: 80px;
+			background: pink;
+			text-align:center;
+			border-bottom:1px solid gray;
+			transition: 0.1s;
+		}
+		li:hover{
+			background: black;
+			color: white;
+		}
+		.active{
+			background: black;
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<div class="sec">1</div>
+	<div class="sec">2</div>
+	<div class="sec">3</div>
+	<div class="sec">4</div>
+	<div class="sec">5</div>
+	<ul class="floor">
+		<li>1F</li>
+		<li>2F</li>
+		<li>3F</li>
+		<li>4F</li>
+		<li>5F</li>
+	</ul>
+</body>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	var arr=['美妆','洁具','家居','服装','零食']
+	var arr1=['1F','2F','3F','4F','5F']
+	$('li').click(function(){
+		$(this).addClass('active').siblings().removeClass('active');
+		$(this).text(arr[$(this).index()]);
+
+		var sTop = $("div").eq($(this).index()).offset().top;
+
+	 $("body,html").animate({
+        scrollTop: sTop
+    }, 1000);
+	})
+     
+	$(document).scroll(function() {
+        var sTop = $(document).scrollTop();  
+        var $floor = $("div").filter(function() {
+            return Math.abs($(this).offset().top - sTop) < $(this).height() / 2;
+        })
+       
+        $('li').each(function(i,o){
+         	$(o).html(arr1[i]).removeClass('active');
+         	if(i==$floor.index()){
+         		$(o).html(arr[i]).addClass('active');
+         	}
+         }) 
+})
+
+	// $('li').hover()
+</script>
+</html>
+<!-- <script type="text/javascript">
+	var flag = true; //控制 当点击楼层号时，禁止滚动条的代码执行   值为true时，可以执行滚动条代码
+	//  根据楼层号 控制滚走的距离  
+	// 1、除了top的楼梯号，为每一个楼梯号添加一个click，控制楼梯滚走的距离（距离：当前楼层的offset().top ）
+$("#menu li:not(:last)").click(function() {
+    flag = false;
+    //当前点击的楼号红色的 其余黑色的
+    $(this).find("span")
+        .addClass("active")
+        .end()
+        .siblings()
+        .find("span")
+        .removeClass("active");
+    //获取当前楼号对应楼层的 top值
+    var sTop = $(".Louti").eq($(this).index()).offset().top;
+
+    //将页面滚走的距离设置为  sTop  
+    $("body,html").animate({
+        "scrollTop": sTop
+    }, 1000, function() {
+        flag = true;
+    });
+})
+//2、点击top   回到顶部
+$("#menu li:last").click(function() {
+    $("body,html").animate({
+        "scrollTop": 0
+    }, 1000);
+    $("#menu li span").removeClass("active");
+})
+
+//3、 滚动条滚动 -- 找到当前楼层的索引    控制楼层号
+$(window).scroll(function() {
+    //如果flag  为true   可以执行滚动条的代码
+    if (flag) {
+
+        //获取页面滚走的距离
+        var sTop = $(document).scrollTop();
+        //filter  返回满足条件的那个对象 
+        //找到满足某个条件的楼层对象    
+        var $floor = $(".Louti").filter(function(index, ele) {
+            return Math.abs($(this).offset().top - sTop) < $(this).height() / 2;
+        })
+
+        //根据楼层的索引 设置楼梯号的 样式
+        $("#menu li").eq($floor.index())
+            .find("span")
+            .addClass("active")
+            .end()
+            .siblings()
+            .find("span")
+            .removeClass("active");
+    }
+})
+</script> -->
+
+
+<!-- <script type="text/javascript">
+	$('li').hover(function(){$(this).find('.first').css('display','none')},function(){$(this).find('.first').css('display','block')})
+
+	$(document).scroll(function(){
+		var tops=$(this).scrollTop();
+		if(tops>200){
+			$('ul').show(1000)
+		}else{
+			$('ul').hide(1000)
+		}
+		$('.mainbox').each(function(i,o){
+			var nowT=$(o).offset().top;
+			if(tops>=nowT){
+				$('.btn').eq(i).find('.first').css('display','none')
+			}
+		})
+	})
+</script> -->

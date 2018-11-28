@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>页面打开时间</title>
+	</head>
+	<body>
+		<p id="msg">
+			
+		</p>
+	</body>
+	<script type="text/javascript">
+		var oP = document.getElementById("msg");
+		var date1 = 0
+		setInterval(function () {
+			date1++;
+			oP.innerHTML= date1;
+			console.log(date1);
+		},1000)
+	</script>
+</html>
